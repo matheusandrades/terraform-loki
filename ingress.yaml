@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: query-frontend
+  namespace: aws-observability
+  annotations:
+    kubernetes.io/ingress.class: aws-alb-controller
+spec:
+  rules:
+    - host: grafana-frontend-loki.alelo-cloud.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loki-loki-distributed-query-frontend
+                port:
+                  number: 3100
+
